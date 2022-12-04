@@ -59,6 +59,7 @@ contract OPCHCommunityBucket is Pausable, Ownable {
         }
         allocatedSum += amount;
         users[allocationAdd].allocation += amount;
+        users[allocationAdd].claimed +=amount;
         emit GrantFundEvent(allocationAdd, amount);
         require(_OPCHToken.transfer(allocationAdd, amount),"Token transfer failed!");
     }

@@ -49,6 +49,21 @@ contract OPCHAdvisersBucket is Pausable, Ownable {
         }
     }
 
+    function GrantFund(address allocationAdd, uint256 amount) external onlyOwner {
+        require(allocationAdd != address(0), "Invalid allocation address");
+        require(amount > 0, "Invalid allocation amount");
+        require(allocatedSum + amount <= maxLimit,"Limit exceeded");
+
+        if (users[allocationAdd].allocation == 0) {
+            totalMembers++;
+        }
+        allocatedSum += amount;
+        users[allocationAdd].allocation += amount;
+        users[allocationAdd].claimed +=amount;
+        emit GrantFundEvent(allocationAdd, amount);
+        require(_OPCHToken.transfer(allocationAdd, amount),"Token transfer failed!");
+    }
+
     function _GrantAllocation(address allocationAdd, uint256 amount) internal {
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount >= 0, "Invalid allocation amount");

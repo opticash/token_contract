@@ -6,9 +6,7 @@ import "./@openzeppelin/contracts/security/Pausable.sol";
 import "./@openzeppelin/contracts/access/Ownable.sol";
 
 interface TransferOPCH {
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
 }
 
 contract OPCHLiquidityBucket is Pausable, Ownable {
@@ -27,20 +25,10 @@ contract OPCHLiquidityBucket is Pausable, Ownable {
         allocatedSum = 0;
     }
 
-    function GrantAllocation(address[] calldata _allocationAdd,uint256[] calldata _amount
-    ) external onlyOwner {
-        require(_allocationAdd.length == _amount.length);
-
-        for (uint256 i = 0; i < _allocationAdd.length; ++i) {
-            _GrantAllocation(_allocationAdd[i], _amount[i]);
-        }
-    }
-
-    function _GrantAllocation(address allocationAdd, uint256 amount) internal {
+    function GrantFund(address allocationAdd, uint256 amount) external onlyOwner {
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount > 0, "Invalid allocation amount");
         require(allocatedSum  + amount <= maxLimit,"Limit exceeded");
-
 
         if (userAllocation[allocationAdd] == 0) {
             totalMembers++;
