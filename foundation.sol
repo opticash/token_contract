@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-pragma solidity ^0.8.9;
+pragma solidity 0.8.17;
 
 import "./@openzeppelin/contracts/security/Pausable.sol";
 import "./@openzeppelin/contracts/access/Ownable.sol";
 
 interface TransferOPCH {
-    function transfer(address recipient, uint256 amount) external returns (bool);
+    function transfer(address recipient, uint256 amount)
+        external
+        returns (bool);
 }
 
 contract OPCHFoundationBucket is Pausable, Ownable {
@@ -30,7 +32,10 @@ contract OPCHFoundationBucket is Pausable, Ownable {
     event VestingStartedEvent(uint256 epochtime);
 
     constructor(TransferOPCH tokenAddress) {
-        require(address(tokenAddress) != address(0),"Token Address cannot be address 0");
+        require(
+            address(tokenAddress) != address(0),
+            "Token Address cannot be address 0"
+        );
 
         _OPCHToken = tokenAddress;
         totalMembers = 0;
@@ -39,8 +44,10 @@ contract OPCHFoundationBucket is Pausable, Ownable {
         if (vestingStartEpoch > 0) emit VestingStartedEvent(vestingStartEpoch);
     }
 
-    function GrantAllocation(address[] calldata _allocationAdd,uint256[] calldata _amount) 
-    external whenNotPaused onlyOwner {
+    function GrantAllocation(
+        address[] calldata _allocationAdd,
+        uint256[] calldata _amount
+    ) external whenNotPaused onlyOwner {
         require(_allocationAdd.length == _amount.length);
 
         for (uint256 i = 0; i < _allocationAdd.length; ++i) {
@@ -51,18 +58,27 @@ contract OPCHFoundationBucket is Pausable, Ownable {
     function _GrantAllocation(address allocationAdd, uint256 amount) internal {
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount >= 0, "Invalid allocation amount");
-        require(amount >= users[allocationAdd].claimed,"Amount cannot be less than already claimed amount");
-        require(allocatedSum - users[allocationAdd].allocation + amount <= maxLimit,"Limit exceeded");
+        require(
+            amount >= users[allocationAdd].claimed,
+            "Amount cannot be less than already claimed amount"
+        );
+        require(
+            allocatedSum - users[allocationAdd].allocation + amount <= maxLimit,
+            "Limit exceeded"
+        );
 
         if (users[allocationAdd].allocation == 0) {
             totalMembers++;
         }
-        allocatedSum+= amount - users[allocationAdd].allocation;
+        allocatedSum += amount - users[allocationAdd].allocation;
         users[allocationAdd].allocation = amount;
         emit GrantAllocationEvent(allocationAdd, amount);
     }
 
-    function GetClaimableBalance(address userAddr) public view returns (uint256)
+    function GetClaimableBalance(address userAddr)
+        public
+        view
+        returns (uint256)
     {
         uint256 lockingTimestamp = vestingStartEpoch + 31536000; // 1 Year locking period 365 * 86400 (Seconds)
         require(block.timestamp > lockingTimestamp, "Reserved for 1 Year");
@@ -70,13 +86,17 @@ contract OPCHFoundationBucket is Pausable, Ownable {
         Bucket memory userBucket = users[userAddr];
         require(userBucket.allocation != 0, "Address is not registered");
 
-        uint256 totalClaimableBal = ((block.timestamp - lockingTimestamp) * userBucket.allocation) / vestingSeconds;
+        uint256 totalClaimableBal = ((block.timestamp - lockingTimestamp) *
+            userBucket.allocation) / vestingSeconds;
 
         if (totalClaimableBal > userBucket.allocation) {
             totalClaimableBal = userBucket.allocation;
         }
 
-        require(totalClaimableBal > userBucket.claimed,"Vesting threshold reached");
+        require(
+            totalClaimableBal > userBucket.claimed,
+            "Vesting threshold reached"
+        );
         return totalClaimableBal - userBucket.claimed;
     }
 
@@ -84,9 +104,12 @@ contract OPCHFoundationBucket is Pausable, Ownable {
         uint256 claimableBalance = GetClaimableBalance(_msgSender());
         require(claimableBalance > 0, "Claim amount invalid.");
 
-        users[_msgSender()].claimed +=claimableBalance;
+        users[_msgSender()].claimed += claimableBalance;
         emit ClaimAllocationEvent(_msgSender(), claimableBalance);
-        require(_OPCHToken.transfer(_msgSender(), claimableBalance),"Token transfer failed!");
+        require(
+            _OPCHToken.transfer(_msgSender(), claimableBalance),
+            "Token transfer failed!"
+        );
     }
 
     function pause() external onlyOwner {

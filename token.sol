@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.9;
+pragma solidity 0.8.17;
 
 import "./@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "./@openzeppelin/contracts/access/Ownable.sol";
@@ -29,7 +29,7 @@ contract OPCH is ERC20Burnable, ERC20Storage {
     address public PrivateBucketAddress;
     address public FoundationBucketAddress;
     address public AdvisersBucketAddress;
-    
+
     uint256 public constant MarketingLimit = 250 * (10**6) * 10**18;
     uint256 public constant TeamLimit = 60 * (10**6) * 10**18;
     uint256 public constant StrategicLimit = 100 * (10**6) * 10**18;
@@ -39,9 +39,7 @@ contract OPCH is ERC20Burnable, ERC20Storage {
     uint256 public constant FoundationLimit = 100 * (10**6) * 10**18;
     uint256 public constant AdvisersLimit = 40 * (10**6) * 10**18;
 
-    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-        
-    }
+    constructor(string memory name, string memory symbol) ERC20(name, symbol) {}
 
     function setAllocation(
         address marketingBucketAddress,

@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-pragma solidity ^0.8.9;
+pragma solidity 0.8.17;
 
 import "./@openzeppelin/contracts/security/Pausable.sol";
 import "./@openzeppelin/contracts/access/Ownable.sol";
 
 interface TransferOPCH {
-    function transfer(address recipient, uint256 amount) external returns (bool);
+    function transfer(address recipient, uint256 amount)
+        external
+        returns (bool);
 }
 
 contract OPCHLiquidityBucket is Pausable, Ownable {
@@ -19,16 +21,22 @@ contract OPCHLiquidityBucket is Pausable, Ownable {
     event GrantAllocationEvent(address allcationAdd, uint256 amount);
 
     constructor(TransferOPCH tokenAddress) {
-        require(address(tokenAddress) != address(0),"Token Address cannot be address 0");
+        require(
+            address(tokenAddress) != address(0),
+            "Token Address cannot be address 0"
+        );
         _OPCHToken = tokenAddress;
         totalMembers = 0;
         allocatedSum = 0;
     }
 
-    function GrantFund(address allocationAdd, uint256 amount) external onlyOwner {
+    function GrantFund(address allocationAdd, uint256 amount)
+        external
+        onlyOwner
+    {
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount > 0, "Invalid allocation amount");
-        require(allocatedSum  + amount <= maxLimit,"Limit exceeded");
+        require(allocatedSum + amount <= maxLimit, "Limit exceeded");
 
         if (userAllocation[allocationAdd] == 0) {
             totalMembers++;
@@ -36,7 +44,10 @@ contract OPCHLiquidityBucket is Pausable, Ownable {
         allocatedSum = allocatedSum + amount;
         userAllocation[allocationAdd] += amount;
         emit GrantAllocationEvent(allocationAdd, amount);
-        require(_OPCHToken.transfer(allocationAdd, amount),"Token transfer failed!");
+        require(
+            _OPCHToken.transfer(allocationAdd, amount),
+            "Token transfer failed!"
+        );
     }
 
     function pause() external onlyOwner {
