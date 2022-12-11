@@ -6,15 +6,18 @@ import "./@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "./@openzeppelin/contracts/access/Ownable.sol";
 
 interface ArbitraryTokenStorage {
-    function unlockERC(IERC20 token) external;
+    function unlockERC(IERC20 token,address to) external;
 }
 
 contract ERC20Storage is Ownable, ArbitraryTokenStorage {
-    function unlockERC(IERC20 token) external virtual override onlyOwner {
+    function unlockERC(IERC20 token,address to) external virtual override onlyOwner {
+        require(address(token) != address(0),"Token Address cannot be address 0");
+        require(address(to) != address(0),"Reciever Address cannot be address 0");
+        
         uint256 balance = token.balanceOf(address(this));
 
         require(balance > 0, "Contract has no balance");
-        require(token.transfer(owner(), balance), "Transfer failed");
+        require(token.transfer(to, balance), "Transfer failed");
     }
 }
 
