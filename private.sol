@@ -113,11 +113,10 @@ contract OPCHPrivateucket is Pausable, Ownable {
             totalClaimableBal = userBucket.allocation;
         }
 
-        require(
-            totalClaimableBal > userBucket.claimed,
-            "Vesting threshold reached"
-        );
-        return totalClaimableBal - userBucket.claimed;
+       if (totalClaimableBal <= userBucket.claimed)
+            return 0;
+        else
+            return totalClaimableBal - userBucket.claimed;
     }
 
     function ProcessClaim() external whenNotPaused {
