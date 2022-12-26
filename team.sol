@@ -2,8 +2,7 @@
 
 pragma solidity 0.8.17;
 
-import "./@openzeppelin/contracts/security/Pausable.sol";
-import "./@openzeppelin/contracts/access/Ownable.sol";
+import "./@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 interface TransferOPCH {
     function transfer(address recipient, uint256 amount)
@@ -11,7 +10,7 @@ interface TransferOPCH {
         returns (bool);
 }
 
-contract OPCHTeamBucket is Pausable, Ownable {
+contract OPCHTeamBucket is AccessControlEnumerable {
     TransferOPCH private _OPCHToken;
 
     struct Bucket {
@@ -20,6 +19,7 @@ contract OPCHTeamBucket is Pausable, Ownable {
     }
 
     mapping(address => Bucket) public users;
+    bytes32 public constant GRANTER_ROLE = keccak256("GRANTER_ROLE");
 
     uint256 public constant maxLimit = 60 * (10**6) * 10**18;
     uint256 public constant vestingSeconds = 365 * 86400;
@@ -40,6 +40,7 @@ contract OPCHTeamBucket is Pausable, Ownable {
         totalMembers = 0;
         allocatedSum = 0;
 
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         vestingStartEpoch = block.timestamp;
         if (vestingStartEpoch > 0) emit VestingStartedEvent(vestingStartEpoch);
     }
@@ -47,7 +48,11 @@ contract OPCHTeamBucket is Pausable, Ownable {
     function GrantAllocation(
         address[] calldata _allocationAdd,
         uint256[] calldata _amount
-    ) external onlyOwner {
+    ) external  {
+        require(
+            hasRole(GRANTER_ROLE, _msgSender()) || hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "Must have admin or granter role"
+        );
         require(_allocationAdd.length == _amount.length);
 
         for (uint256 i = 0; i < _allocationAdd.length; ++i) {
@@ -100,7 +105,7 @@ contract OPCHTeamBucket is Pausable, Ownable {
         return totalClaimableBal - userBucket.claimed;
     }
 
-    function ProcessClaim() external whenNotPaused {
+    function ProcessClaim() external  {
         uint256 claimableBalance = GetClaimableBalance(_msgSender());
         require(claimableBalance > 0, "Claim amount invalid.");
 
@@ -110,13 +115,5 @@ contract OPCHTeamBucket is Pausable, Ownable {
             _OPCHToken.transfer(_msgSender(), claimableBalance),
             "Token transfer failed!"
         );
-    }
-
-    function pause() external onlyOwner {
-        _pause();
-    }
-
-    function unpause() external onlyOwner {
-        _unpause();
     }
 }

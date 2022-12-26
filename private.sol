@@ -2,8 +2,7 @@
 
 pragma solidity 0.8.17;
 
-import "./@openzeppelin/contracts/security/Pausable.sol";
-import "./@openzeppelin/contracts/access/Ownable.sol";
+import "./@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 interface TransferOPCH {
     function transfer(address recipient, uint256 amount)
@@ -11,7 +10,7 @@ interface TransferOPCH {
         returns (bool);
 }
 
-contract OPCHPrivateucket is Pausable, Ownable {
+contract OPCHPrivateucket is AccessControlEnumerable {
     TransferOPCH private _OPCHToken;
 
     struct Bucket {
@@ -20,6 +19,7 @@ contract OPCHPrivateucket is Pausable, Ownable {
     }
 
     mapping(address => Bucket) public users;
+    bytes32 public constant GRANTER_ROLE = keccak256("GRANTER_ROLE");
 
     uint256 public constant maxLimit = 100 * (10**6) * 10**18;
     uint256 public constant vestingSeconds = 365 * 86400;
@@ -41,6 +41,7 @@ contract OPCHPrivateucket is Pausable, Ownable {
         totalMembers = 0;
         allocatedSum = 0;
 
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         vestingStartEpoch = block.timestamp;
         emit VestingStartedEvent(vestingStartEpoch);
     }
@@ -48,7 +49,11 @@ contract OPCHPrivateucket is Pausable, Ownable {
     function GrantAllocation(
         address[] calldata _allocationAdd,
         uint256[] calldata _amount
-    ) external onlyOwner {
+    ) external {
+        require(
+            hasRole(GRANTER_ROLE, _msgSender()) || hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "Must have admin or granter role"
+        );
         require(_allocationAdd.length == _amount.length);
 
         for (uint256 i = 0; i < _allocationAdd.length; ++i) {
@@ -56,10 +61,12 @@ contract OPCHPrivateucket is Pausable, Ownable {
         }
     }
 
-    function GrantFund(address allocationAdd, uint256 amount)
-        external
-        onlyOwner
+    function GrantFund(address allocationAdd, uint256 amount) external
     {
+        require(
+            hasRole(GRANTER_ROLE, _msgSender()) || hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "Must have admin or granter role"
+        );
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount > 0, "Invalid allocation amount");
         require(allocatedSum + amount <= maxLimit, "Limit exceeded");
@@ -119,7 +126,7 @@ contract OPCHPrivateucket is Pausable, Ownable {
             return totalClaimableBal - userBucket.claimed;
     }
 
-    function ProcessClaim() external whenNotPaused {
+    function ProcessClaim() external {
         uint256 claimableBalance = GetClaimableBalance(_msgSender());
         require(claimableBalance > 0, "Claim amount invalid.");
 
@@ -129,13 +136,5 @@ contract OPCHPrivateucket is Pausable, Ownable {
             _OPCHToken.transfer(_msgSender(), claimableBalance),
             "Token transfer failed!"
         );
-    }
-
-    function pause() external onlyOwner {
-        _pause();
-    }
-
-    function unpause() external onlyOwner {
-        _unpause();
     }
 }
