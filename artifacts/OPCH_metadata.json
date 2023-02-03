@@ -92,7 +92,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "AdvisersBucketAddress",
+				"name": "advisersAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -105,7 +105,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "AdvisersLimit",
+				"name": "ADVISERS_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -118,7 +118,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "FoundationBucketAddress",
+				"name": "foundationAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -131,7 +131,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "FoundationLimit",
+				"name": "FOUNDATION_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -144,7 +144,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "LiquidityBucketAddress",
+				"name": "liquidityAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -157,7 +157,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "LiquidityLimit",
+				"name": "LIQUIDITY_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -170,7 +170,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "MarketingBucketAddress",
+				"name": "marketingAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -183,7 +183,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "MarketingLimit",
+				"name": "MARKETING_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -196,7 +196,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "PrivateBucketAddress",
+				"name": "privateAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -209,7 +209,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "PrivateSaleLimit",
+				"name": "PRIVATESALE_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -222,7 +222,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "PublicBucketAddress",
+				"name": "publicAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -235,7 +235,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "PublicSaleLimit",
+				"name": "PUBLICSALE_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -248,7 +248,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "StrategicBucketAddress",
+				"name": "strategicAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -261,7 +261,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "StrategicLimit",
+				"name": "STRATEGIC_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -274,7 +274,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "TeamBucketAddress",
+				"name": "teamAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -287,7 +287,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "TeamLimit",
+				"name": "TEAM_LIMIT",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -494,42 +494,42 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "marketingBucketAddress",
+						"name": "marketingAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "teamBucketAddress",
+						"name": "teamAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "strategicBucketAddress",
+						"name": "strategicAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "publicBucketAddress",
+						"name": "publicAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "liquidityBucketAddress",
+						"name": "liquidityAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "privateBucketAddress",
+						"name": "privateAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "foundationBucketAddress",
+						"name": "foundationAddress",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "advisersBucketAddress",
+						"name": "advisersAddress",
 						"type": "address"
 					}
 				],

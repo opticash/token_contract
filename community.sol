@@ -4,13 +4,13 @@ pragma solidity 0.8.17;
 import "./@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 interface TransferOPCH {
-    function transfer(address recipient, uint256 amount)
-        external
+    function transfer(address recipient, uint256 amount) 
+        external 
         returns (bool);
 }
 
 contract OPCHCommunityBucket is AccessControlEnumerable {
-    TransferOPCH private _OPCHToken;
+    TransferOPCH private opchToken;
 
     struct Bucket {
         uint256 allocation;
@@ -20,11 +20,11 @@ contract OPCHCommunityBucket is AccessControlEnumerable {
     bytes32 public constant GRANTER_ROLE = keccak256("GRANTER_ROLE");
     mapping(address => Bucket) public users;
 
-    uint256 public constant maxLimit = 250 * (10**6) * 10**18;
-    uint256 public constant vestingSeconds = 150 * 86400;
+    uint256 public constant MAX_LIMIT = 250 * (10**6) * 10**18;
+    uint256 public constant VESTING_SECONDS = 150 * 86400;
     uint256 public totalMembers;
     uint256 public allocatedSum;
-    uint256 public vestingStartEpoch;
+    uint256 public immutable vestingStartEpoch;
 
     event GrantAllocationEvent(address allcationAdd, uint256 amount);
     event GrantFundEvent(address allcationAdd, uint256 amount);
@@ -32,43 +32,31 @@ contract OPCHCommunityBucket is AccessControlEnumerable {
     event VestingStartedEvent(uint256 epochtime);
 
     constructor(TransferOPCH tokenAddress) {
-        require(
-            address(tokenAddress) != address(0),
-            "Token Address cannot be address 0"
-        );
-        _OPCHToken = tokenAddress;
+        require(address(tokenAddress) != address(0),"Token Address cannot be address 0");
+        opchToken = tokenAddress;
         totalMembers = 0;
         allocatedSum = 0;
-        
+
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         vestingStartEpoch = block.timestamp;
         emit VestingStartedEvent(vestingStartEpoch);
     }
 
-    function GrantAllocation(
-        address[] calldata _allocationAdd,
-        uint256[] calldata _amount
-    ) external {
-        require(
-            hasRole(GRANTER_ROLE, _msgSender()) || hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "Must have admin or granter role"
-        );
-        require(_allocationAdd.length == _amount.length);
+    function grantAllocation(address[] calldata _allocationAdd,uint256[] calldata _amount) external {
+        require(hasRole(GRANTER_ROLE, _msgSender()) ||hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),"Must have admin or granter role");
+        require(_allocationAdd.length == _amount.length,"Count of address and amount do not match");
 
-        for (uint256 i = 0; i < _allocationAdd.length; ++i) {
-            _GrantAllocation(_allocationAdd[i], _amount[i]);
+        uint256 length = _allocationAdd.length;
+        for (uint256 i = 0; i < length; ++i) {
+            _grantAllocation(_allocationAdd[i], _amount[i]);
         }
     }
 
-    function GrantFund(address allocationAdd, uint256 amount) external
-    {
-        require(
-            hasRole(GRANTER_ROLE, _msgSender()) || hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "Must have admin or granter role"
-        );
+    function grantFund(address allocationAdd, uint256 amount) external {
+        require(hasRole(GRANTER_ROLE, _msgSender()) ||hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),"Must have admin or granter role");
         require(allocationAdd != address(0), "Invalid allocation address");
         require(amount > 0, "Invalid allocation amount");
-        require(allocatedSum + amount <= maxLimit, "Limit exceeded");
+        require(allocatedSum + amount <= MAX_LIMIT, "Limit exceeded");
 
         if (users[allocationAdd].allocation == 0) {
             totalMembers++;
@@ -78,22 +66,16 @@ contract OPCHCommunityBucket is AccessControlEnumerable {
         users[allocationAdd].claimed += amount;
         emit GrantFundEvent(allocationAdd, amount);
         require(
-            _OPCHToken.transfer(allocationAdd, amount),
+            opchToken.transfer(allocationAdd, amount),
             "Token transfer failed!"
         );
     }
 
-    function _GrantAllocation(address allocationAdd, uint256 amount) internal {
+    function _grantAllocation(address allocationAdd, uint256 amount) internal {
         require(allocationAdd != address(0), "Invalid allocation address");
-        require(amount >= 0, "Invalid allocation amount");
-        require(
-            amount >= users[allocationAdd].claimed,
-            "Amount cannot be less than already claimed amount"
-        );
-        require(
-            allocatedSum - users[allocationAdd].allocation + amount <= maxLimit,
-            "Limit exceeded"
-        );
+        require(amount > 0, "Invalid allocation amount");
+        require(amount >= users[allocationAdd].claimed,"Amount cannot be less than already claimed amount");
+        require(allocatedSum - users[allocationAdd].allocation + amount <=MAX_LIMIT,"Limit exceeded");
 
         if (users[allocationAdd].allocation == 0) {
             totalMembers++;
@@ -103,37 +85,28 @@ contract OPCHCommunityBucket is AccessControlEnumerable {
         emit GrantAllocationEvent(allocationAdd, amount);
     }
 
-    function GetClaimableBalance(address userAddr)
-        public
-        view
-        returns (uint256)
-    {
+    function getclaimableBalance(address userAddr) public view returns (uint256) {
         Bucket memory userBucket = users[userAddr];
         require(userBucket.allocation != 0, "Address is not registered");
 
         uint256 totalClaimableBal = userBucket.allocation / 20; // 20% of allocation
         totalClaimableBal += (((block.timestamp - vestingStartEpoch) *
-            (userBucket.allocation - totalClaimableBal)) / vestingSeconds);
+            (userBucket.allocation - totalClaimableBal)) / VESTING_SECONDS);
 
         if (totalClaimableBal > userBucket.allocation) {
             totalClaimableBal = userBucket.allocation;
         }
 
-        if (totalClaimableBal <= userBucket.claimed)
-            return 0;
-        else
-            return totalClaimableBal - userBucket.claimed;
+        if (totalClaimableBal <= userBucket.claimed) return 0;
+        else return totalClaimableBal - userBucket.claimed;
     }
 
-    function ProcessClaim() external {
-        uint256 claimableBalance = GetClaimableBalance(_msgSender());
+    function processClaim() external {
+        uint256 claimableBalance = getclaimableBalance(_msgSender());
         require(claimableBalance > 0, "Claim amount invalid.");
 
         users[_msgSender()].claimed += claimableBalance;
         emit ClaimAllocationEvent(_msgSender(), claimableBalance);
-        require(
-            _OPCHToken.transfer(_msgSender(), claimableBalance),
-            "Token transfer failed!"
-        );
+        require(opchToken.transfer(_msgSender(), claimableBalance),"Token transfer failed!");
     }
 }

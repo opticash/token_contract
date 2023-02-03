@@ -4967,97 +4967,97 @@
 		},
 		"deployedBytecode": {
 			"functionDebugData": {
-				"@AdvisersBucketAddress_912": {
+				"@advisersAddress_912": {
 					"entryPoint": 1639,
 					"id": 912,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@AdvisersLimit_1008": {
+				"@ADVISERS_LIMIT_1008": {
 					"entryPoint": 5288,
 					"id": 1008,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@FoundationBucketAddress_910": {
+				"@foundationAddress_910": {
 					"entryPoint": 3452,
 					"id": 910,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@FoundationLimit_996": {
+				"@FOUNDATION_LIMIT_996": {
 					"entryPoint": 3490,
 					"id": 996,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@LiquidityBucketAddress_906": {
+				"@liquidityAddress_906": {
 					"entryPoint": 2935,
 					"id": 906,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@LiquidityLimit_972": {
+				"@LIQUIDITY_LIMIT_972": {
 					"entryPoint": 3931,
 					"id": 972,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@MarketingBucketAddress_898": {
+				"@marketingAddress_898": {
 					"entryPoint": 2973,
 					"id": 898,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@MarketingLimit_924": {
+				"@MARKETING_LIMIT_924": {
 					"entryPoint": 2847,
 					"id": 924,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@PrivateBucketAddress_908": {
+				"@privateAddress_908": {
 					"entryPoint": 2862,
 					"id": 908,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@PrivateSaleLimit_984": {
+				"@PRIVATESALE_LIMIT_984": {
 					"entryPoint": 3916,
 					"id": 984,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@PublicBucketAddress_904": {
+				"@publicAddress_904": {
 					"entryPoint": 3357,
 					"id": 904,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@PublicSaleLimit_960": {
+				"@PUBLICSALE_LIMIT_960": {
 					"entryPoint": 3395,
 					"id": 960,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@StrategicBucketAddress_902": {
+				"@strategicAddress_902": {
 					"entryPoint": 2370,
 					"id": 902,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@StrategicLimit_948": {
+				"@STRATEGIC_LIMIT_948": {
 					"entryPoint": 3011,
 					"id": 948,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@TeamBucketAddress_900": {
+				"@teamAddress_900": {
 					"entryPoint": 5303,
 					"id": 900,
 					"parameterSlots": 0,
 					"returnSlots": 0
 				},
-				"@TeamLimit_936": {
+				"@TEAM_LIMIT_936": {
 					"entryPoint": 2920,
 					"id": 936,
 					"parameterSlots": 0,
@@ -17616,22 +17616,22 @@
 				"totalCost": "infinite"
 			},
 			"external": {
-				"AdvisersBucketAddress()": "2561",
-				"AdvisersLimit()": "417",
-				"FoundationBucketAddress()": "2581",
-				"FoundationLimit()": "418",
-				"LiquidityBucketAddress()": "2581",
-				"LiquidityLimit()": "440",
-				"MarketingBucketAddress()": "2603",
-				"MarketingLimit()": "397",
-				"PrivateBucketAddress()": "2604",
-				"PrivateSaleLimit()": "418",
-				"PublicBucketAddress()": "2604",
-				"PublicSaleLimit()": "441",
-				"StrategicBucketAddress()": "2560",
-				"StrategicLimit()": "440",
-				"TeamBucketAddress()": "2624",
-				"TeamLimit()": "374",
+				"advisersAddress()": "2561",
+				"ADVISERS_LIMIT()": "417",
+				"foundationAddress()": "2581",
+				"FOUNDATION_LIMIT()": "418",
+				"liquidityAddress()": "2581",
+				"LIQUIDITY_LIMIT()": "440",
+				"marketingAddress()": "2603",
+				"MARKETING_LIMIT()": "397",
+				"privateAddress()": "2604",
+				"PRIVATESALE_LIMIT()": "418",
+				"publicAddress()": "2604",
+				"PUBLICSALE_LIMIT()": "441",
+				"strategicAddress()": "2560",
+				"STRATEGIC_LIMIT()": "440",
+				"teamAddress()": "2624",
+				"TEAM_LIMIT()": "374",
 				"allowance(address,address)": "infinite",
 				"approve(address,uint256)": "infinite",
 				"balanceOf(address)": "2974",
@@ -17653,22 +17653,22 @@
 			}
 		},
 		"methodIdentifiers": {
-			"AdvisersBucketAddress()": "03aef22c",
-			"AdvisersLimit()": "e5d814c1",
-			"FoundationBucketAddress()": "8df8c10a",
-			"FoundationLimit()": "8ee4760b",
-			"LiquidityBucketAddress()": "591c7d82",
-			"LiquidityLimit()": "bd8bc3f0",
-			"MarketingBucketAddress()": "65199551",
-			"MarketingLimit()": "3991f466",
-			"PrivateBucketAddress()": "39e25ff6",
-			"PrivateSaleLimit()": "b870bad9",
-			"PublicBucketAddress()": "7c123f53",
-			"PublicSaleLimit()": "88f191d4",
-			"StrategicBucketAddress()": "10669efb",
-			"StrategicLimit()": "66654981",
-			"TeamBucketAddress()": "ea2e4c72",
-			"TeamLimit()": "5014b077",
+			"advisersAddress()": "03aef22c",
+			"ADVISERS_LIMIT()": "e5d814c1",
+			"foundationAddress()": "8df8c10a",
+			"FOUNDATION_LIMIT()": "8ee4760b",
+			"liquidityAddress()": "591c7d82",
+			"LIQUIDITY_LIMIT()": "bd8bc3f0",
+			"marketingAddress()": "65199551",
+			"MARKETING_LIMIT()": "3991f466",
+			"privateAddress()": "39e25ff6",
+			"PRIVATESALE_LIMIT()": "b870bad9",
+			"publicAddress()": "7c123f53",
+			"PUBLICSALE_LIMIT()": "88f191d4",
+			"strategicAddress()": "10669efb",
+			"STRATEGIC_LIMIT()": "66654981",
+			"teamAddress()": "ea2e4c72",
+			"TEAM_LIMIT()": "5014b077",
 			"allowance(address,address)": "dd62ed3e",
 			"approve(address,uint256)": "095ea7b3",
 			"balanceOf(address)": "70a08231",
@@ -17777,7 +17777,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "AdvisersBucketAddress",
+			"name": "advisersAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17790,7 +17790,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "AdvisersLimit",
+			"name": "ADVISERS_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17803,7 +17803,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "FoundationBucketAddress",
+			"name": "foundationAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17816,7 +17816,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "FoundationLimit",
+			"name": "FOUNDATION_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17829,7 +17829,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "LiquidityBucketAddress",
+			"name": "liquidityAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17842,7 +17842,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "LiquidityLimit",
+			"name": "LIQUIDITY_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17855,7 +17855,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "MarketingBucketAddress",
+			"name": "marketingAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17868,7 +17868,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "MarketingLimit",
+			"name": "MARKETING_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17881,7 +17881,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "PrivateBucketAddress",
+			"name": "privateAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17894,7 +17894,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "PrivateSaleLimit",
+			"name": "PRIVATESALE_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17907,7 +17907,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "PublicBucketAddress",
+			"name": "publicAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17920,7 +17920,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "PublicSaleLimit",
+			"name": "PUBLICSALE_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17933,7 +17933,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "StrategicBucketAddress",
+			"name": "strategicAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17946,7 +17946,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "StrategicLimit",
+			"name": "STRATEGIC_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -17959,7 +17959,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "TeamBucketAddress",
+			"name": "teamAddress",
 			"outputs": [
 				{
 					"internalType": "address",
@@ -17972,7 +17972,7 @@
 		},
 		{
 			"inputs": [],
-			"name": "TeamLimit",
+			"name": "TEAM_LIMIT",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -18179,42 +18179,42 @@
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "marketingBucketAddress",
+					"name": "marketingAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "teamBucketAddress",
+					"name": "teamAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "strategicBucketAddress",
+					"name": "strategicAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "publicBucketAddress",
+					"name": "publicAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "liquidityBucketAddress",
+					"name": "liquidityAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "privateBucketAddress",
+					"name": "privateAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "foundationBucketAddress",
+					"name": "foundationAddress",
 					"type": "address"
 				},
 				{
 					"internalType": "address",
-					"name": "advisersBucketAddress",
+					"name": "advisersAddress",
 					"type": "address"
 				}
 			],
